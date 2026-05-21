@@ -5,7 +5,7 @@ const Navbar = () => {
     return (
         <div className='fixed top-0 left-0 z-50 w-full h-18 
     bg-white/10 backdrop-blur-md border-b border-white/20
-    flex items-center justify-between px-6 shadow-lg font-[Poiret-One]'>
+    flex items-center justify-between px-6 shadow-lg'>
 
             <div className="grp1 flex gap-6 items-center">
                 <div className="logo">
@@ -44,7 +44,7 @@ const Navbar = () => {
                     </svg>
                 </div>
 
-                <div className="header text-black text-2xl font-bold tracking-wide">
+                <div className="header text-black text-3xl font-bold font-(family-name:--font-poiret) tracking-wider">
                     Prakriti
                 </div>
             </div>
