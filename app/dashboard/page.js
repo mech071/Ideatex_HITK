@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Menu, X } from "lucide-react";
 
 import {
     onAuthStateChanged,
@@ -13,20 +14,265 @@ import {
 import { auth } from "@/lib/firebase";
 
 const sidebarItems = [
-    "Overview",
-    "Crop Prediction",
-    "Weather",
-    "Soil Data",
-    "Risk Analysis",
-    "Alerts",
-    "Settings",
+    {
+        key: "overview",
+        value: "Overview",
+    },
+
+    {
+        key: "cropPrediction",
+        value: "Crop Prediction",
+    },
+
+    {
+        key: "weather",
+        value: "Weather",
+    },
+
+    {
+        key: "soilData",
+        value: "Soil Data",
+    },
+
+    {
+        key: "riskAnalysis",
+        value: "Risk Analysis",
+    },
+
+    {
+        key: "alerts",
+        value: "Alerts",
+    },
+
+    {
+        key: "settings",
+        value: "Settings",
+    },
 ];
+const dashboardTranslations = {
+    en: {
+        overview: "Overview",
+        cropPrediction: "Crop Prediction",
+        weather: "Weather",
+        soilData: "Soil Data",
+        riskAnalysis: "Risk Analysis",
+        alerts: "Alerts",
+        settings: "Settings",
+        monitor: "Monitor crops, climate and soil insights.",
+        logout: "Logout",
+        farmer: "Farmer",
+        predict: "Predict Crops",
+        loading: "Loading Dashboard...",
+        languageHindi: "Hindi",
+        languageBengali: "Bengali",
+        temperature: "Temperature",
+        humidity: "Humidity",
+        rainfall: "Rainfall",
+        thirtyDayRainfall: "30D Rainfall",
+        soilPH: "Soil pH",
+        nitrogen: "Nitrogen",
+        nitrogenInput: "Nitrogen (N)",
+        topCrops: "Top Crop Recommendations",
+        aiSuitability: "AI-based agricultural suitability",
+        weatherSummary: "Weather Summary",
+        condition: "Condition",
+        season: "Season",
+        district: "District",
+        manualPredictor: "Manual Crop Predictor",
+        enterSoil: "Enter soil parameters manually to generate top crop recommendations.",
+        phosphorus: "Phosphorus (P)",
+        potassium: "Potassium (K)",
+        ph: "pH",
+        topRecommendations: "Top Recommendations",
+        aiRankings: "AI-generated crop suitability rankings.",
+        currentWeather: "Current Weather",
+        liveAtmosphere: "Live atmospheric conditions.",
+        historicalClimate: "30-Day Historical Climate",
+        climateAnalysis: "Open-Meteo climate analysis.",
+        avgTemperature: "Average Temperature",
+        totalRainfall: "Total Rainfall",
+        forecast: "5-Day Forecast",
+        forecastData: "OpenWeather forecast data.",
+    },
+    hi: {
+        overview: "अवलोकन",
+        cropPrediction: "फसल पूर्वानुमान",
+        weather: "मौसम",
+        soilData: "मिट्टी का डेटा",
+        riskAnalysis: "जोखिम विश्लेषण",
+        alerts: "अलर्ट",
+        settings: "सेटिंग्स",
+        monitor: "फसलों, जलवायु और मिट्टी की जानकारी पर नजर रखें।",
+        logout: "लॉगआउट",
+        farmer: "किसान",
+        predict: "फसल का अनुमान लगाएं",
+        loading: "डैशबोर्ड लोड हो रहा है...",
+        languageHindi: "हिन्दी",
+        languageBengali: "বাংলা",
+        temperature: "तापमान",
+        humidity: "नमी",
+        rainfall: "वर्षा",
+        thirtyDayRainfall: "30 दिन की वर्षा",
+        soilPH: "मिट्टी का pH",
+        nitrogen: "नाइट्रोजन",
+        nitrogenInput: "नाइट्रोजन (N)",
+        topCrops: "शीर्ष फसल सुझाव",
+        aiSuitability: "AI आधारित कृषि उपयुक्तता",
+        weatherSummary: "मौसम सारांश",
+        condition: "स्थिति",
+        season: "मौसम",
+        district: "जिला",
+        manualPredictor: "मैनुअल फसल पूर्वानुमान",
+        enterSoil: "शीर्ष फसल सुझाव पाने के लिए मिट्टी के मान दर्ज करें।",
+        phosphorus: "फॉस्फोरस (P)",
+        potassium: "पोटैशियम (K)",
+        ph: "pH",
+        topRecommendations: "शीर्ष सुझाव",
+        aiRankings: "AI द्वारा तैयार फसल उपयुक्तता रैंकिंग।",
+        currentWeather: "वर्तमान मौसम",
+        liveAtmosphere: "लाइव वायुमंडलीय स्थितियां।",
+        historicalClimate: "30-दिन का ऐतिहासिक जलवायु डेटा",
+        climateAnalysis: "Open-Meteo जलवायु विश्लेषण।",
+        avgTemperature: "औसत तापमान",
+        totalRainfall: "कुल वर्षा",
+        forecast: "5-दिन का पूर्वानुमान",
+        forecastData: "OpenWeather पूर्वानुमान डेटा।",
+    },
+    bn: {
+        overview: "ওভারভিউ",
+        cropPrediction: "ফসল পূর্বাভাস",
+        weather: "আবহাওয়া",
+        soilData: "মাটির তথ্য",
+        riskAnalysis: "ঝুঁকি বিশ্লেষণ",
+        alerts: "সতর্কতা",
+        settings: "সেটিংস",
+        monitor: "ফসল, জলবায়ু এবং মাটির তথ্য নজরে রাখুন।",
+        logout: "লগআউট",
+        farmer: "কৃষক",
+        predict: "ফসল অনুমান করুন",
+        loading: "ড্যাশবোর্ড লোড হচ্ছে...",
+        languageHindi: "हिन्दी",
+        languageBengali: "বাংলা",
+        temperature: "তাপমাত্রা",
+        humidity: "আর্দ্রতা",
+        rainfall: "বৃষ্টিপাত",
+        thirtyDayRainfall: "৩০ দিনের বৃষ্টিপাত",
+        soilPH: "মাটির pH",
+        nitrogen: "নাইট্রোজেন",
+        nitrogenInput: "নাইট্রোজেন (N)",
+        topCrops: "সেরা ফসলের পরামর্শ",
+        aiSuitability: "AI ভিত্তিক কৃষি উপযুক্ততা",
+        weatherSummary: "আবহাওয়ার সারাংশ",
+        condition: "অবস্থা",
+        season: "মৌসুম",
+        district: "জেলা",
+        manualPredictor: "ম্যানুয়াল ফসল পূর্বাভাস",
+        enterSoil: "সেরা ফসলের পরামর্শ পেতে মাটির মান লিখুন।",
+        phosphorus: "ফসফরাস (P)",
+        potassium: "পটাশিয়াম (K)",
+        ph: "pH",
+        topRecommendations: "সেরা পরামর্শ",
+        aiRankings: "AI তৈরি ফসলের উপযুক্ততা র‍্যাঙ্কিং।",
+        currentWeather: "বর্তমান আবহাওয়া",
+        liveAtmosphere: "লাইভ বায়ুমণ্ডলীয় অবস্থা।",
+        historicalClimate: "৩০ দিনের ঐতিহাসিক জলবায়ু",
+        climateAnalysis: "Open-Meteo জলবায়ু বিশ্লেষণ।",
+        avgTemperature: "গড় তাপমাত্রা",
+        totalRainfall: "মোট বৃষ্টিপাত",
+        forecast: "৫ দিনের পূর্বাভাস",
+        forecastData: "OpenWeather পূর্বাভাস তথ্য।",
+    },
+};
+
+const cropTranslations = {
+    en: {
+        apple: "Apple",
+        banana: "Banana",
+        blackgram: "Blackgram",
+        chickpea: "Chickpea",
+        coconut: "Coconut",
+        coffee: "Coffee",
+        cotton: "Cotton",
+        grapes: "Grapes",
+        jute: "Jute",
+        kidneybeans: "Kidney Beans",
+        lentil: "Lentil",
+        maize: "Maize",
+        mango: "Mango",
+        mothbeans: "Moth Beans",
+        mungbean: "Mung Bean",
+        muskmelon: "Muskmelon",
+        orange: "Orange",
+        papaya: "Papaya",
+        pigeonpeas: "Pigeon Peas",
+        pomegranate: "Pomegranate",
+        rice: "Rice",
+        watermelon: "Watermelon",
+    },
+    hi: {
+        apple: "सेब",
+        banana: "केला",
+        blackgram: "उड़द",
+        chickpea: "चना",
+        coconut: "नारियल",
+        coffee: "कॉफी",
+        cotton: "कपास",
+        grapes: "अंगूर",
+        jute: "जूट",
+        kidneybeans: "राजमा",
+        lentil: "मसूर",
+        maize: "मक्का",
+        mango: "आम",
+        mothbeans: "मोठ",
+        mungbean: "मूंग",
+        muskmelon: "खरबूजा",
+        orange: "संतरा",
+        papaya: "पपीता",
+        pigeonpeas: "अरहर",
+        pomegranate: "अनार",
+        rice: "धान",
+        watermelon: "तरबूज",
+    },
+    bn: {
+        apple: "আপেল",
+        banana: "কলা",
+        blackgram: "মাষকলাই",
+        chickpea: "ছোলা",
+        coconut: "নারকেল",
+        coffee: "কফি",
+        cotton: "তুলা",
+        grapes: "আঙুর",
+        jute: "পাট",
+        kidneybeans: "রাজমা",
+        lentil: "মসুর",
+        maize: "ভুট্টা",
+        mango: "আম",
+        mothbeans: "মট বিন",
+        mungbean: "মুগ",
+        muskmelon: "খরমুজ",
+        orange: "কমলা",
+        papaya: "পেঁপে",
+        pigeonpeas: "অড়হর",
+        pomegranate: "ডালিম",
+        rice: "ধান",
+        watermelon: "তরমুজ",
+    },
+};
 
 const Page = () => {
-
+    const [sidebarOpen, setSidebarOpen] =
+        useState(false);
     const [activeTab, setActiveTab] =
         useState("Overview");
-
+    const [language, setLanguage] = useState("en");
+    const t = dashboardTranslations[language];
+    const cropNames =
+        cropTranslations[language] || cropTranslations.en;
+    const getCropName = (cropName) =>
+        cropNames[cropName?.toLowerCase()] || cropName;
+    const activeSidebarItem = sidebarItems.find(
+        (item) => item.value === activeTab
+    );
     const [manualN, setManualN] =
         useState("");
 
@@ -305,7 +551,7 @@ const Page = () => {
 
         return (
             <div className="min-h-screen bg-black text-white flex items-center justify-center text-2xl">
-                Loading Dashboard...
+                {t.loading}
             </div>
         );
     }
@@ -320,62 +566,114 @@ const Page = () => {
         dashboardData?.crops || [];
 
     return (
-        <div className="min-h-screen bg-black text-white flex overflow-hidden">
+        <div className="min-h-screen bg-black text-white flex relative overflow-hidden">
 
             {/* SIDEBAR */}
-            <div className="hidden lg:flex w-[260px] border-r border-white/10 bg-[#050505] flex-col justify-between p-6">
+            <div
+                className={`
+                fixed lg:relative z-50
+                top-0 left-0 h-screen
+                ${sidebarOpen
+                        ? "w-[260px] translate-x-0"
+                        : "w-[260px] -translate-x-full lg:translate-x-0 lg:w-[80px]"}
+                border-r border-white/10
+                bg-[#050505]
+                flex flex-col justify-between
+                transition-all duration-300
+                overflow-hidden
+            `}
+            >
 
                 <div>
 
-                    <div className="mb-10">
+                    {/* TOP */}
+                    <div className="p-6 flex items-center justify-between">
 
-                        <h1 className="text-3xl font-bold text-green-500">
-                            Prakriti
-                        </h1>
+                        {sidebarOpen && (
+                            <h1 className="text-3xl font-bold text-green-500">
+                                Prakriti
+                            </h1>
+                        )}
+
+                        <button
+                            onClick={() =>
+                                setSidebarOpen(!sidebarOpen)
+                            }
+                            className="mt-8 p-2 rounded-xl border border-white/10 bg-[#111] cursor-pointer"
+                        >
+                            {sidebarOpen ? (
+                                <X size={20} />
+                            ) : (
+                                <Menu size={20} />
+                            )}
+                        </button>
 
                     </div>
 
-                    <div className="space-y-2">
+                    {/* ITEMS */}
+                    <div
+                        className={`
+        space-y-2
+        px-3
+        transition-all duration-300
+        ${sidebarOpen
+                                ? "opacity-100"
+                                : "opacity-0 pointer-events-none"}
+    `}
+                    >
 
-                        {sidebarItems.map(
-                            (item, i) => (
+                        {sidebarItems.map((item, i) => (
 
-                                <motion.div
-                                    key={i}
-                                    whileHover={{
-                                        x: 6,
-                                    }}
-                                    onClick={() =>
-                                        setActiveTab(item)
-                                    }
-                                    className={`px-4 py-3 rounded-xl cursor-pointer transition ${activeTab === item
+                            <motion.div
+                                key={i}
+                                whileHover={{
+                                    x: 4,
+                                }}
+                                onClick={() => {
+
+                                    setActiveTab(item.value);
+
+                                    setSidebarOpen(false);
+
+                                }}
+                                className={`
+                px-4 py-4 rounded-xl
+                cursor-pointer transition
+                flex items-center
+                whitespace-nowrap
+                overflow-hidden
+                ${activeTab === item.value
                                         ? "bg-green-500/20 text-green-300 border border-green-500/20"
-                                        : "hover:bg-white/5 text-gray-400"
-                                        }`}
-                                >
-                                    {item}
-                                </motion.div>
-                            )
-                        )}
+                                        : "hover:bg-white/5 text-gray-400"}
+            `}
+                            >
+
+                                {t[item.key]}
+
+                            </motion.div>
+
+                        ))}
 
                     </div>
 
                 </div>
 
                 {/* USER */}
-                <div className="border-t border-white/10 pt-6">
+                <div className="border-t border-white/10 p-4">
 
-                    <div className="mb-4">
+                    {sidebarOpen && (
+                        <div className="mb-4">
 
-                        <p className="font-semibold">
-                            {userData?.name}
-                        </p>
+                            <p className="font-semibold">
+                                {userData?.name}
+                            </p>
 
-                        <p className="text-sm text-gray-500">
-                            Farmer
-                        </p>
+                            <p className="text-sm text-gray-500">
+                                {t.farmer}
+                            </p>
 
-                    </div>
+                        </div>
+                    )}
 
                     <button
                         onClick={async () => {
@@ -385,17 +683,37 @@ const Page = () => {
                             router.push("/login");
 
                         }}
-                        className="w-full rounded-xl bg-red-500/10 border border-red-500/20 py-3 hover:bg-red-500/20 transition"
+                        className={`
+                        rounded-xl
+                        bg-red-500/10
+                        border border-red-500/20
+                        hover:bg-red-500/20
+                        transition
+                        py-3
+                        ${sidebarOpen
+                                ? "w-full"
+                                : "w-full text-sm"}
+                    `}
                     >
-                        Logout
+                        {sidebarOpen ? t.logout : "↩"}
                     </button>
 
                 </div>
 
             </div>
 
+            {/* MOBILE OVERLAY */}
+            {sidebarOpen && (
+                <div
+                    onClick={() =>
+                        setSidebarOpen(false)
+                    }
+                    className="fixed inset-0 bg-black/50 z-40"
+                />
+            )}
+
             {/* MAIN */}
-            <div className="flex-1 overflow-y-auto bg-[#080808]">
+            <div className="flex-1 overflow-y-auto bg-[#080808] transition-all duration-300">
 
                 <div className="p-6 md:p-10">
 
@@ -405,15 +723,49 @@ const Page = () => {
                         <div>
 
                             <h1 className="text-4xl font-bold">
-                                {activeTab}
+                                {activeSidebarItem
+                                    ? t[activeSidebarItem.key]
+                                    : activeTab}
                             </h1>
 
                             <p className="text-gray-500 mt-2">
-                                Monitor crops, climate and soil insights.
+                                {t.monitor}
                             </p>
 
                         </div>
+                        <div className="flex gap-2 mt-3 justify-end">
 
+                            <button
+                                onClick={() => setLanguage("en")}
+                                className={`px-3 py-1 rounded-lg border transition ${language === "en"
+                                        ? "bg-green-500 text-black"
+                                        : "border-white/10"
+                                    }`}
+                            >
+                                EN
+                            </button>
+
+                            <button
+                                onClick={() => setLanguage("hi")}
+                                className={`px-3 py-1 rounded-lg border transition ${language === "hi"
+                                        ? "bg-green-500 text-black"
+                                        : "border-white/10"
+                                    }`}
+                            >
+                                {t.languageHindi}
+                            </button>
+
+                            <button
+                                onClick={() => setLanguage("bn")}
+                                className={`px-3 py-1 rounded-lg border transition ${language === "bn"
+                                        ? "bg-green-500 text-black"
+                                        : "border-white/10"
+                                    }`}
+                            >
+                                {t.languageBengali}
+                            </button>
+
+                        </div>
                         <div className="text-right">
 
                             <p className="text-green-400">
@@ -437,31 +789,31 @@ const Page = () => {
 
                                 {[
                                     {
-                                        title: "Temperature",
+                                        title: t.temperature,
                                         value: `${weather?.temperature}°C`,
                                         color: "text-cyan-300",
                                     },
 
                                     {
-                                        title: "Humidity",
+                                        title: t.humidity,
                                         value: `${weather?.humidity}%`,
                                         color: "text-blue-300",
                                     },
 
                                     {
-                                        title: "30D Rainfall",
+                                        title: t.thirtyDayRainfall,
                                         value: `${historicalData?.totalRain} mm`,
                                         color: "text-green-300",
                                     },
 
                                     {
-                                        title: "Soil pH",
+                                        title: t.soilPH,
                                         value: soil?.ph,
                                         color: "text-yellow-300",
                                     },
 
                                     {
-                                        title: "Nitrogen",
+                                        title: t.nitrogen,
                                         value: soil?.nitrogen,
                                         color: "text-orange-300",
                                     },
@@ -517,11 +869,11 @@ const Page = () => {
                                             <div>
 
                                                 <h2 className="text-2xl font-bold">
-                                                    Top Crop Recommendations
+                                                    {t.topCrops}
                                                 </h2>
 
                                                 <p className="text-gray-500 mt-2">
-                                                    AI-based agricultural suitability
+                                                    {t.aiSuitability}
                                                 </p>
 
                                             </div>
@@ -543,7 +895,7 @@ const Page = () => {
                                                     <div className="flex items-center justify-between mb-4">
 
                                                         <h3 className="text-xl font-semibold capitalize">
-                                                            {crop.crop}
+                                                            {getCropName(crop.crop)}
                                                         </h3>
 
                                                         <span className="text-green-400 font-semibold">
@@ -578,40 +930,6 @@ const Page = () => {
 
                                     </div>
 
-                                    {/* QUICK INSIGHTS */}
-                                    <div className="rounded-3xl border border-white/10 bg-[#0b0b0b] p-8">
-
-                                        <h2 className="text-2xl font-bold mb-6">
-                                            Quick Insights
-                                        </h2>
-
-                                        <div className="space-y-4 text-gray-300">
-
-                                            {weather?.humidity > 80 && (
-                                                <div className="rounded-xl bg-yellow-500/10 border border-yellow-500/20 p-4">
-                                                    High humidity detected.
-                                                    Increased fungal risk possible.
-                                                </div>
-                                            )}
-
-                                            {weather?.rainfall < 2 && (
-                                                <div className="rounded-xl bg-red-500/10 border border-red-500/20 p-4">
-                                                    Low rainfall conditions detected.
-                                                    Irrigation recommended.
-                                                </div>
-                                            )}
-
-                                            {soil?.ph < 6 && (
-                                                <div className="rounded-xl bg-blue-500/10 border border-blue-500/20 p-4">
-                                                    Soil slightly acidic.
-                                                    Some crops may underperform.
-                                                </div>
-                                            )}
-
-                                        </div>
-
-                                    </div>
-
                                 </div>
 
                                 {/* RIGHT */}
@@ -621,7 +939,7 @@ const Page = () => {
                                     <div className="rounded-3xl border border-white/10 bg-[#0b0b0b] p-8">
 
                                         <h2 className="text-2xl font-bold mb-6">
-                                            Weather Summary
+                                            {t.weatherSummary}
                                         </h2>
 
                                         <div className="space-y-5">
@@ -629,7 +947,7 @@ const Page = () => {
                                             <div className="flex items-center justify-between">
 
                                                 <span className="text-gray-500">
-                                                    Condition
+                                                    {t.condition}
                                                 </span>
 
                                                 <span>
@@ -641,7 +959,7 @@ const Page = () => {
                                             <div className="flex items-center justify-between">
 
                                                 <span className="text-gray-500">
-                                                    Season
+                                                    {t.season}
                                                 </span>
 
                                                 <span>
@@ -653,38 +971,13 @@ const Page = () => {
                                             <div className="flex items-center justify-between">
 
                                                 <span className="text-gray-500">
-                                                    District
+                                                    {t.district}
                                                 </span>
 
                                                 <span>
                                                     {userData?.district}
                                                 </span>
 
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                    {/* ALERTS */}
-                                    <div className="rounded-3xl border border-white/10 bg-[#0b0b0b] p-8">
-
-                                        <h2 className="text-2xl font-bold mb-6">
-                                            Alerts
-                                        </h2>
-
-                                        <div className="space-y-4">
-
-                                            <div className="rounded-xl border border-yellow-500/20 bg-yellow-500/10 p-4">
-                                                Monitor humidity levels closely.
-                                            </div>
-
-                                            <div className="rounded-xl border border-red-500/20 bg-red-500/10 p-4">
-                                                Rainfall levels below seasonal average.
-                                            </div>
-
-                                            <div className="rounded-xl border border-green-500/20 bg-green-500/10 p-4">
-                                                Soil conditions favorable for rice.
                                             </div>
 
                                         </div>
@@ -708,12 +1001,11 @@ const Page = () => {
                                 <div className="mb-8">
 
                                     <h2 className="text-3xl font-bold mb-2">
-                                        Manual Crop Predictor
+                                        {t.manualPredictor}
                                     </h2>
 
                                     <p className="text-gray-500">
-                                        Enter soil parameters manually to generate
-                                        top crop recommendations.
+                                        {t.enterSoil}
                                     </p>
 
                                 </div>
@@ -723,7 +1015,7 @@ const Page = () => {
 
                                     <input
                                         type="number"
-                                        placeholder="Nitrogen (N)"
+                                        placeholder={t.nitrogenInput}
                                         value={manualN}
                                         onChange={(e) =>
                                             setManualN(e.target.value)
@@ -733,7 +1025,7 @@ const Page = () => {
 
                                     <input
                                         type="number"
-                                        placeholder="Phosphorus (P)"
+                                        placeholder={t.phosphorus}
                                         value={manualP}
                                         onChange={(e) =>
                                             setManualP(e.target.value)
@@ -743,7 +1035,7 @@ const Page = () => {
 
                                     <input
                                         type="number"
-                                        placeholder="Potassium (K)"
+                                        placeholder={t.potassium}
                                         value={manualK}
                                         onChange={(e) =>
                                             setManualK(e.target.value)
@@ -753,7 +1045,7 @@ const Page = () => {
 
                                     <input
                                         type="number"
-                                        placeholder="pH"
+                                        placeholder={t.ph}
                                         value={manualPH}
                                         onChange={(e) =>
                                             setManualPH(e.target.value)
@@ -768,7 +1060,7 @@ const Page = () => {
                                     onClick={manualPredict}
                                     className="mt-8 bg-green-500 hover:bg-green-600 transition px-8 py-4 rounded-2xl font-semibold"
                                 >
-                                    Predict Crops
+                                    {t.predict}
                                 </button>
 
                             </div>
@@ -781,11 +1073,11 @@ const Page = () => {
                                     <div className="mb-8">
 
                                         <h2 className="text-3xl font-bold mb-2">
-                                            Top Recommendations
+                                            {t.topRecommendations}
                                         </h2>
 
                                         <p className="text-gray-500">
-                                            AI-generated crop suitability rankings.
+                                            {t.aiRankings}
                                         </p>
 
                                     </div>
@@ -805,7 +1097,7 @@ const Page = () => {
                                                 <div className="flex items-center justify-between mb-4">
 
                                                     <h3 className="text-xl font-semibold capitalize">
-                                                        {crop.crop}
+                                                        {getCropName(crop.crop)}
                                                     </h3>
 
                                                     <span className="text-green-400 font-semibold">
@@ -854,11 +1146,11 @@ const Page = () => {
                                 <div className="mb-8">
 
                                     <h2 className="text-3xl font-bold mb-2">
-                                        Current Weather
+                                        {t.currentWeather}
                                     </h2>
 
                                     <p className="text-gray-500">
-                                        Live atmospheric conditions.
+                                        {t.liveAtmosphere}
                                     </p>
 
                                 </div>
@@ -867,37 +1159,37 @@ const Page = () => {
 
                                     {[
                                         {
-                                            label: "Temperature",
+                                            label: t.temperature,
                                             value: `${weather?.temperature}°C`,
                                             color: "text-cyan-300",
                                         },
 
                                         {
-                                            label: "Humidity",
+                                            label: t.humidity,
                                             value: `${weather?.humidity}%`,
                                             color: "text-blue-300",
                                         },
 
                                         {
-                                            label: "Rainfall",
+                                            label: t.rainfall,
                                             value: `${weather?.rainfall} mm`,
                                             color: "text-green-300",
                                         },
 
                                         {
-                                            label: "Condition",
+                                            label: t.condition,
                                             value: weather?.condition,
                                             color: "text-yellow-300",
                                         },
 
                                         {
-                                            label: "Season",
+                                            label: t.season,
                                             value: weather?.season,
                                             color: "text-purple-300",
                                         },
 
                                         {
-                                            label: "District",
+                                            label: t.district,
                                             value: userData?.district,
                                             color: "text-orange-300",
                                         },
@@ -936,11 +1228,11 @@ const Page = () => {
                                 <div className="mb-8">
 
                                     <h2 className="text-3xl font-bold mb-2">
-                                        30-Day Historical Climate
+                                        {t.historicalClimate}
                                     </h2>
 
                                     <p className="text-gray-500">
-                                        Open-Meteo climate analysis.
+                                        {t.climateAnalysis}
                                     </p>
 
                                 </div>
@@ -955,7 +1247,7 @@ const Page = () => {
                                     >
 
                                         <p className="text-gray-400 mb-4">
-                                            Average Temperature
+                                            {t.avgTemperature}
                                         </p>
 
                                         <h2 className="text-5xl font-bold text-cyan-300">
@@ -972,7 +1264,7 @@ const Page = () => {
                                     >
 
                                         <p className="text-gray-400 mb-4">
-                                            Total Rainfall
+                                            {t.totalRainfall}
                                         </p>
 
                                         <h2 className="text-5xl font-bold text-green-300">
@@ -991,11 +1283,11 @@ const Page = () => {
                                 <div className="mb-8">
 
                                     <h2 className="text-3xl font-bold mb-2">
-                                        5-Day Forecast
+                                        {t.forecast}
                                     </h2>
 
                                     <p className="text-gray-500">
-                                        OpenWeather forecast data.
+                                        {t.forecastData}
                                     </p>
 
                                 </div>
@@ -1040,7 +1332,7 @@ const Page = () => {
 
                                                 <p className="text-gray-400">
 
-                                                    Humidity {day.main.humidity}%
+                                                    {t.humidity} {day.main.humidity}%
 
                                                 </p>
 
@@ -1071,3 +1363,4 @@ const Page = () => {
 };
 
 export default Page;
+

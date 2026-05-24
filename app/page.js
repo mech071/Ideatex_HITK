@@ -346,7 +346,7 @@ export default function Home() {
 
             {["rainfall", "temperature", "humidity"].map((item) => (
               <button
-                key={item}
+                key={t[item.key]}
                 onClick={() => setLayer(item)}
                 className={`px-5 py-3 rounded-xl transition font-semibold border capitalize ${
                   layer === item
@@ -354,7 +354,7 @@ export default function Home() {
                     : "bg-white/5 border-white/10 hover:bg-white/10"
                 }`}
               >
-                {item}
+                {t[item.key]}
               </button>
             ))}
           </div>
