@@ -11,7 +11,6 @@ const Page = () => {
 
   const [weatherData, setWeatherData] = useState(null);
 
-  const [N, setN] = useState("");
   const [P, setP] = useState("");
   const [K, setK] = useState("");
 
@@ -47,7 +46,9 @@ const Page = () => {
 
   // CROP PREDICTION API
   const predictCrops = async () => {
+
     if (!weatherData) return;
+
     const response = await fetch(
       "/api/get-crop-recommendation",
       {
@@ -57,12 +58,16 @@ const Page = () => {
         },
         body: JSON.stringify({
 
-          N: Number(N),
+          // SoilGrids API values
+          N: weatherData.soil.nitrogen,
+
+          ph: weatherData.soil.ph,
+
+          // User Inputs
           P: Number(P),
           K: Number(K),
 
-          ph: 6.5,
-
+          // Weather APIs
           temperature:
             weatherData.weather.temperature,
 
@@ -263,11 +268,11 @@ const Page = () => {
                 </motion.div>
               )}
 
-              {/* NPK INPUT */}
+              {/* PK INPUT */}
               {showNPK && (
 
                 <motion.div
-                  key="npk"
+                  key="pk"
                   initial={{
                     opacity: 0,
                     y: 40,
@@ -285,15 +290,33 @@ const Page = () => {
                   className="space-y-6"
                 >
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {/* API DATA DISPLAY */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                    <input
-                      type="number"
-                      placeholder="Nitrogen (N)"
-                      value={N}
-                      onChange={(e) => setN(e.target.value)}
-                      className="rounded-2xl border border-white/10 bg-white/5 px-6 py-4 text-white placeholder:text-gray-500 outline-none backdrop-blur-xl focus:border-cyan-400 transition duration-300"
-                    />
+                    <div className="rounded-2xl border border-cyan-400/20 bg-white/5 px-6 py-5 backdrop-blur-xl">
+                      <p className="text-gray-400 text-sm mb-2">
+                        Soil Nitrogen (API)
+                      </p>
+
+                      <h2 className="text-3xl font-bold text-cyan-300">
+                        {weatherData.soil.nitrogen.toFixed(2)}
+                      </h2>
+                    </div>
+
+                    <div className="rounded-2xl border border-cyan-400/20 bg-white/5 px-6 py-5 backdrop-blur-xl">
+                      <p className="text-gray-400 text-sm mb-2">
+                        Soil pH (API)
+                      </p>
+
+                      <h2 className="text-3xl font-bold text-cyan-300">
+                        {weatherData.soil.ph.toFixed(2)}
+                      </h2>
+                    </div>
+
+                  </div>
+
+                  {/* USER INPUTS */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                     <input
                       type="number"
@@ -313,6 +336,7 @@ const Page = () => {
 
                   </div>
 
+                  {/* PREDICT BUTTON */}
                   <button
                     onClick={predictCrops}
                     className="rounded-2xl bg-cyan-500 hover:bg-cyan-600 px-8 py-4 font-semibold transition duration-300 shadow-[0_0_30px_rgba(6,182,212,0.25)] hover:scale-[1.03]"
@@ -348,9 +372,15 @@ const Page = () => {
                           }}
                           className="rounded-2xl border border-cyan-400/20 bg-white/5 px-6 py-5 backdrop-blur-xl shadow-[0_0_20px_rgba(34,211,238,0.08)]"
                         >
-                          <h3 className="text-2xl font-semibold capitalize">
-                            {crop.crop || crop.name || crop.label} Confidence: {crop.confidence}
+
+                          <h3 className="text-2xl font-semibold capitalize mb-2">
+                            {crop.crop || crop.name || crop.label}
                           </h3>
+
+                          <p className="text-cyan-300">
+                            Confidence: {(crop.confidence * 100).toFixed(1)}%
+                          </p>
+
                         </motion.div>
 
                       ))}

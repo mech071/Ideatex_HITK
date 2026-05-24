@@ -273,14 +273,14 @@ export default function Home() {
             className="flex gap-4"
           >
             <Link
-              href="/dashboard"
+              href="/login"
               className="px-6 py-3 rounded-xl bg-green-600 hover:bg-green-700 hover:scale-105 transition duration-300 font-semibold shadow-2xl"
             >
               Get Started
             </Link>
 
             <Link
-              href="/features"
+              href="/"
               className="px-6 py-3 rounded-xl border border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:scale-105 transition duration-300 font-semibold"
             >
               See Features
@@ -620,7 +620,7 @@ export default function Home() {
     </h2>
 
     <Link
-      href="/dashboard"
+      href="/login"
       className="inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-green-600 hover:bg-green-700 transition duration-300 font-semibold text-lg shadow-[0_0_40px_rgba(34,197,94,0.25)] hover:scale-105"
     >
       Get Started

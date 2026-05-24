@@ -8,6 +8,11 @@ const Navbar = () => {
 
     const pathname = usePathname();
 
+    // HIDE NAVBAR ON DASHBOARD
+    if (pathname === "/dashboard") {
+        return null;
+    }
+
     const [mounted, setMounted] = React.useState(false);
 
     React.useEffect(() => {
@@ -115,6 +120,7 @@ const Navbar = () => {
                 <div className="header text-black text-3xl font-bold font-(family-name:--font-poiret) tracking-wider">
                     Prakriti
                 </div>
+
             </div>
 
             {/* RIGHT */}
@@ -123,7 +129,7 @@ const Navbar = () => {
                 {!mounted ? null : pathname === "/" ? (
 
                     <Link
-                        href="/dashboard"
+                        href="/login"
                         className="px-5 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition delay-100"
                     >
                         Get Started
@@ -141,6 +147,7 @@ const Navbar = () => {
                 )}
 
             </div>
+
         </div>
     );
 };

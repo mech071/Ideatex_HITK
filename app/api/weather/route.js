@@ -34,7 +34,32 @@ export async function POST(request) {
 
     const weatherData = await weatherRes.json();
 
-    // STEP 3 — SEASON LOGIC
+    // STEP 3 — SOIL DATA
+    const soilRes = await fetch(
+        `https://rest.isric.org/soilgrids/v2.0/properties/query?lon=${lon}&lat=${lat}&property=nitrogen&property=phh2o&depth=0-5cm&value=mean`
+    );
+
+    const soilData = await soilRes.json();
+
+    const nitrogenLayer =
+        soilData.properties.layers.find(
+            (layer) => layer.name === "nitrogen"
+        );
+
+    const phLayer =
+        soilData.properties.layers.find(
+            (layer) => layer.name === "phh2o"
+        );
+
+    const nitrogen =
+        nitrogenLayer?.depths?.[0]?.values?.["Q0.5"] || 50;
+
+    const phRaw =
+        phLayer?.depths?.[0]?.values?.["Q0.5"] || 65;
+
+    const ph = phRaw / 10;
+
+    // STEP 4 — SEASON LOGIC
     const month = new Date().getMonth() + 1;
 
     let season = "";
@@ -52,8 +77,9 @@ export async function POST(request) {
         season = "Autumn";
     }
 
-    // STEP 4 — FINAL RESPONSE
+    // STEP 5 — FINAL RESPONSE
     return NextResponse.json({
+
         success: true,
 
         district,
@@ -64,11 +90,29 @@ export async function POST(request) {
         },
 
         weather: {
-            temperature: weatherData.main.temp,
-            humidity: weatherData.main.humidity,
-            rainfall: weatherData.rain?.["1h"] || 0,
-            condition: weatherData.weather[0].main,
+
+            temperature:
+                weatherData.main.temp,
+
+            humidity:
+                weatherData.main.humidity,
+
+            rainfall:
+                weatherData.rain?.["1h"] || 0,
+
+            condition:
+                weatherData.weather[0].main,
+
             season,
+        },
+
+        soil: {
+
+            nitrogen:
+                Number(nitrogen),
+
+            ph:
+                Number(ph.toFixed(1)),
         },
     });
 }
