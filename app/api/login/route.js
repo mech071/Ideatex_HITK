@@ -5,9 +5,10 @@ export async function POST(request) {
 
     try {
 
-        const { name, district, phone, email } = await request.json();
+        const { name, district, email, land_area_acres } =
+            await request.json();
 
-        if (!name || !district || !phone || !email) {
+        if (!name || !district || !email || !land_area_acres) {
             return NextResponse.json(
                 {
                     message: "All fields are required",
@@ -30,11 +31,29 @@ export async function POST(request) {
         });
 
         if (existingUser) {
+            await collection.updateOne(
+                {
+                    email,
+                },
+                {
+                    $set: {
+                        name,
+                        district,
+                        land_area_acres: Number(land_area_acres),
+                        updatedAt: new Date(),
+                    },
+                }
+            );
 
             return NextResponse.json(
                 {
-                    message: "User already exists",
-                    user: existingUser,
+                    message: "User updated",
+                    user: {
+                        ...existingUser,
+                        name,
+                        district,
+                        land_area_acres: Number(land_area_acres),
+                    },
                 },
                 {
                     status: 200,
@@ -47,8 +66,8 @@ export async function POST(request) {
         await collection.insertOne({
             name,
             district,
-            phone,
             email,
+            land_area_acres: Number(land_area_acres),
             createdAt: new Date(),
         });
 

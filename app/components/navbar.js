@@ -1,23 +1,15 @@
 "use client";
 
-import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const Navbar = () => {
 
     const pathname = usePathname();
-
     // HIDE NAVBAR ON DASHBOARD
-    if (pathname === "/dashboard") {
+    if (pathname?.startsWith("/dashboard")) {
         return null;
     }
-
-    const [mounted, setMounted] = React.useState(false);
-
-    React.useEffect(() => {
-        setMounted(true);
-    }, []);
 
     return (
         <div
@@ -126,7 +118,7 @@ const Navbar = () => {
             {/* RIGHT */}
             <div className="grp2">
 
-                {!mounted ? null : pathname === "/" ? (
+                {pathname === "/" ? (
 
                     <Link
                         href="/login"

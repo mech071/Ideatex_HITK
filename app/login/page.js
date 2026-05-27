@@ -11,7 +11,42 @@ import {
 import { auth, provider } from "@/lib/firebase";
 
 const Page = () => {
+
+  const router = useRouter();
+
   const [error, setError] = useState("");
+
+  const [name, setName] = useState("");
+  const [district, setDistrict] = useState("");
+  const [landAreaAcres, setLandAreaAcres] = useState("");
+
+  useEffect(() => {
+
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      async (user) => {
+
+        if (user) {
+          try {
+            const response = await fetch(
+              `/api/user?email=${encodeURIComponent(user.email)}`
+            );
+
+            if (response.ok) {
+              router.push("/dashboard");
+            }
+          } catch {
+            setError("");
+          }
+        }
+
+      }
+    );
+
+    return () => unsubscribe();
+
+  }, [router]);
+
   const farmer = async (email) => {
 
     const response = await fetch("/api/login", {
@@ -22,8 +57,8 @@ const Page = () => {
       body: JSON.stringify({
         name,
         district,
-        phone,
         email,
+        land_area_acres: Number(landAreaAcres),
       }),
     });
 
@@ -34,26 +69,8 @@ const Page = () => {
     }
 
     return data;
+
   };
-  const router = useRouter();
-  useEffect(() => {
-
-    const unsubscribe = onAuthStateChanged(
-      auth,
-      (user) => {
-
-        if (user) {
-          router.push("/dashboard");
-        }
-      }
-    );
-
-    return () => unsubscribe();
-
-  }, [router]);
-  const [name, setName] = useState("");
-  const [district, setDistrict] = useState("");
-  const [phone, setPhone] = useState("");
 
   const handleGoogleLogin = async () => {
 
@@ -62,30 +79,64 @@ const Page = () => {
     if (
       !name.trim() ||
       !district.trim() ||
-      !phone.trim()
+      !landAreaAcres
     ) {
       setError("Please fill all fields");
       return;
     }
 
+    if (Number(landAreaAcres) <= 0) {
+      setError("Land area must be greater than 0");
+      return;
+    }
+
     try {
 
+      // GOOGLE LOGIN
       const result = await signInWithPopup(
         auth,
         provider
       );
 
-      const response = await farmer(
+      // GET LAT/LON FROM DISTRICT
+      const weatherRes = await fetch("/api/weather", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          district,
+        }),
+      });
+
+      const weatherData = await weatherRes.json();
+
+      if (
+        !weatherRes.ok ||
+        !weatherData.success
+      ) {
+        setError(
+          weatherData.message ||
+          "Unable to fetch district location"
+        );
+        return;
+      }
+
+      // SAVE USER
+      await farmer(
         result.user.email
       );
-
-      console.log(response);
 
       router.push("/dashboard");
 
     } catch (error) {
 
       console.log(error);
+
+      setError(
+        error.message ||
+        "Something went wrong"
+      );
 
     }
 
@@ -105,10 +156,8 @@ const Page = () => {
           className="object-cover"
         />
 
-        {/* Overlay */}
         <div className="absolute inset-0 bg-black/35" />
 
-        {/* Text */}
         <div className="relative z-10 flex flex-col justify-center p-14 text-white">
 
           <h1 className="text-5xl font-bold leading-tight mb-4">
@@ -131,7 +180,7 @@ const Page = () => {
 
         <div className="w-full max-w-md">
 
-          {/* Logo / Brand */}
+          {/* Heading */}
           <div className="mb-10">
 
             <h2 className="text-4xl font-bold text-gray-900 mb-3">
@@ -165,25 +214,26 @@ const Page = () => {
               placeholder="District"
               value={district}
               onChange={(e) => {
-                setError("")
-                setDistrict(e.target.value)
-              }
-              }
+                setError("");
+                setDistrict(e.target.value);
+              }}
               className="w-full rounded-2xl border border-gray-200 bg-white px-5 py-4 text-gray-900 outline-none focus:border-green-500 transition"
             />
 
             <input
-              type="tel"
+              type="number"
               required
-              placeholder="Phone Number"
-              value={phone}
+              min="0.1"
+              step="0.1"
+              placeholder="Land Area (acres)"
+              value={landAreaAcres}
               onChange={(e) => {
-                setError("")
-                setPhone(e.target.value)
-              }
-              }
+                setError("");
+                setLandAreaAcres(e.target.value);
+              }}
               className="w-full rounded-2xl border border-gray-200 bg-white px-5 py-4 text-gray-900 outline-none focus:border-green-500 transition"
             />
+
             {
               error && (
                 <p className="text-red-500 text-sm font-medium ml-2">
@@ -191,7 +241,8 @@ const Page = () => {
                 </p>
               )
             }
-            {/* Google Button */}
+
+            {/* GOOGLE BUTTON */}
             <button
               onClick={handleGoogleLogin}
               className="w-full flex items-center justify-center gap-3 rounded-2xl border border-gray-300 bg-white px-6 py-4 text-gray-800 font-semibold hover:bg-gray-50 transition shadow-sm"

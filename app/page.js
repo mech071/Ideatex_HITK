@@ -346,15 +346,14 @@ export default function Home() {
 
             {["rainfall", "temperature", "humidity"].map((item) => (
               <button
-                key={t[item.key]}
+                key={item}
                 onClick={() => setLayer(item)}
-                className={`px-5 py-3 rounded-xl transition font-semibold border capitalize ${
-                  layer === item
+                className={`px-5 py-3 rounded-xl transition font-semibold border capitalize ${layer === item
                     ? "bg-green-600 border-green-500"
                     : "bg-white/5 border-white/10 hover:bg-white/10"
-                }`}
+                  }`}
               >
-                {t[item.key]}
+                {item}
               </button>
             ))}
           </div>
@@ -540,16 +539,16 @@ export default function Home() {
 
             {[
               {
-                title: "Yield Predictor",
-                desc: "Predict crop productivity using environmental and soil conditions.",
+                title: "Best Crop Predictor",
+                desc: "Predict which crops are better for your land conditions.",
               },
               {
-                title: "Fertilizer Recommender",
-                desc: "Get optimized fertilizer recommendations based on crop data.",
+                title: "Revenue Calculator",
+                desc: "Calculate which crop will give you maximum profits.",
               },
               {
                 title: "Risk Calculator",
-                desc: "Analyze climate and rainfall risks before cultivation decisions.",
+                desc: "Analyze disease, climate and rainfall risks before cultivation decisions.",
               },
             ].map((card, i) => (
               <motion.div
@@ -597,37 +596,37 @@ export default function Home() {
       </section>
 
       {/* FINAL CTA */}
-<section className="relative pt-10 pb-24 px-6 bg-[#07140d] overflow-hidden">
+      <section className="relative pt-10 pb-24 px-6 bg-[#07140d] overflow-hidden">
 
-  <motion.div
-    initial={{
-      opacity: 0,
-      y: 50,
-    }}
-    whileInView={{
-      opacity: 1,
-      y: 0,
-    }}
-    transition={{
-      duration: 1,
-    }}
-    viewport={{ once: true }}
-    className="max-w-4xl mx-auto text-center"
-  >
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 50,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 1,
+          }}
+          viewport={{ once: true }}
+          className="max-w-4xl mx-auto text-center"
+        >
 
-    <h2 className="text-4xl md:text-6xl font-bold mb-6 font-(family-name:--font-poiret)">
-      Ready to Predict Smarter?
-    </h2>
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 font-(family-name:--font-poiret)">
+            Ready to Predict Smarter?
+          </h2>
 
-    <Link
-      href="/login"
-      className="inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-green-600 hover:bg-green-700 transition duration-300 font-semibold text-lg shadow-[0_0_40px_rgba(34,197,94,0.25)] hover:scale-105"
-    >
-      Get Started
-    </Link>
+          <Link
+            href="/login"
+            className="inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-green-600 hover:bg-green-700 transition duration-300 font-semibold text-lg shadow-[0_0_40px_rgba(34,197,94,0.25)] hover:scale-105"
+          >
+            Get Started
+          </Link>
 
-  </motion.div>
-</section>
+        </motion.div>
+      </section>
 
     </motion.div>
   );

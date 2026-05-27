@@ -11,8 +11,7 @@ const Page = () => {
 
   const [weatherData, setWeatherData] = useState(null);
 
-  const [P, setP] = useState("");
-  const [K, setK] = useState("");
+  const [landAreaAcres, setLandAreaAcres] = useState("");
 
   const [crops, setCrops] = useState([]);
 
@@ -47,7 +46,7 @@ const Page = () => {
   // CROP PREDICTION API
   const predictCrops = async () => {
 
-    if (!weatherData) return;
+    if (!weatherData || Number(landAreaAcres) <= 0) return;
 
     const response = await fetch(
       "/api/get-crop-recommendation",
@@ -57,25 +56,9 @@ const Page = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-
-          // SoilGrids API values
-          N: weatherData.soil.nitrogen,
-
-          ph: weatherData.soil.ph,
-
-          // User Inputs
-          P: Number(P),
-          K: Number(K),
-
-          // Weather APIs
-          temperature:
-            weatherData.weather.temperature,
-
-          humidity:
-            weatherData.weather.humidity,
-
-          rainfall:
-            weatherData.weather.rainfall,
+          latitude: weatherData.coordinates.lat,
+          longitude: weatherData.coordinates.lon,
+          land_area_acres: Number(landAreaAcres),
         }),
       }
     );
@@ -84,7 +67,7 @@ const Page = () => {
 
     console.log(data);
 
-    setCrops(data.data.top_5);
+    setCrops(data.data.top_5_crops || []);
   };
 
   return (
@@ -316,21 +299,15 @@ const Page = () => {
                   </div>
 
                   {/* USER INPUTS */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 gap-4">
 
                     <input
                       type="number"
-                      placeholder="Phosphorus (P)"
-                      value={P}
-                      onChange={(e) => setP(e.target.value)}
-                      className="rounded-2xl border border-white/10 bg-white/5 px-6 py-4 text-white placeholder:text-gray-500 outline-none backdrop-blur-xl focus:border-cyan-400 transition duration-300"
-                    />
-
-                    <input
-                      type="number"
-                      placeholder="Potassium (K)"
-                      value={K}
-                      onChange={(e) => setK(e.target.value)}
+                      min="0.1"
+                      step="0.1"
+                      placeholder="Land Area (acres)"
+                      value={landAreaAcres}
+                      onChange={(e) => setLandAreaAcres(e.target.value)}
                       className="rounded-2xl border border-white/10 bg-white/5 px-6 py-4 text-white placeholder:text-gray-500 outline-none backdrop-blur-xl focus:border-cyan-400 transition duration-300"
                     />
 
@@ -378,7 +355,7 @@ const Page = () => {
                           </h3>
 
                           <p className="text-cyan-300">
-                            Confidence: {(crop.confidence * 100).toFixed(1)}%
+                            Confidence: {(crop.confidence_pct ?? 0).toFixed(1)}%
                           </p>
 
                         </motion.div>

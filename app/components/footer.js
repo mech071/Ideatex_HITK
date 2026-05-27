@@ -1,7 +1,16 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+  const pathname = usePathname();
+
+  if (pathname?.startsWith("/dashboard")) {
+    return null;
+  }
+
   return (
     <footer className="relative bg-black border-t border-white/10 text-white px-6 py-12 overflow-hidden">
 
@@ -17,7 +26,8 @@ const Footer = () => {
           </h2>
 
           <p className="text-gray-400 leading-relaxed max-w-md">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis quae exercitationem magnam! Excepturi eaque accusantium cupiditate perspiciatis nesciunt in quis, exercitationem repellendus at nemo reiciendis, reprehenderit ratione et atque expedita?
+            Real-time environmental insights combined with machine learning
+              models to support modern Indian agriculture.
           </p>
         </div>
 
@@ -30,12 +40,8 @@ const Footer = () => {
 
             <div className="flex flex-col gap-3 text-gray-400">
 
-              <Link href="/" className="hover:text-white transition">
-                Home
-              </Link>
-
-              <Link href="/features" className="hover:text-white transition">
-                Features
+              <Link href="/login" className="hover:text-white transition">
+                Login
               </Link>
 
               <Link href="/dashboard" className="hover:text-white transition">
