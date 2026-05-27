@@ -232,64 +232,18 @@ Subsequent requests are significantly faster.
 
 ---
 
-# Installation
-
-## Clone Repository
-
-```bash
-git clone https://github.com/your-username/prakriti.git
-```
-
-## Frontend Setup
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-## Backend Setup
-
-```bash
-cd backend
-pip install -r requirements.txt
-uvicorn main:app --reload
-```
-
----
-
-# Environment Variables
-
-## Frontend
-
-```env
-NEXT_PUBLIC_API_URL=
-NEXT_PUBLIC_WEATHER_API_KEY=
-```
-
-## Backend
-
-```env
-MONGODB_URI=
-WEATHER_API_KEY=
-```
-
----
-
 # Screenshots
 
-Add screenshots of:
-- Landing Page
-- Prediction Dashboard
-- Analytics Section
-- Weather Integration
-- FAQ Page
-
+<img width="1600" height="825" alt="WhatsApp Image 2026-05-27 at 7 26 36 PM" src="https://github.com/user-attachments/assets/2847284f-259a-4ab0-b602-995af73ce6a4" />
+<img width="1600" height="829" alt="WhatsApp Image 2026-05-27 at 7 26 36 PM (1)" src="https://github.com/user-attachments/assets/3d596520-be57-453d-ad12-89d6e07cb678" />
+<img width="1600" height="829" alt="WhatsApp Image 2026-05-27 at 7 26 36 PM (1)" src="https://github.com/user-attachments/assets/ce81c1f0-fa89-44eb-99f3-dcdbbe232743" />
+<img width="1600" height="824" alt="WhatsApp Image 2026-05-27 at 7 26 36 PM (2)" src="https://github.com/user-attachments/assets/d6b20c4a-01bf-4f8d-b6e3-c9ef5c64f3b8" />
+<img width="2175" height="1732" alt="image" src="https://github.com/user-attachments/assets/ccf4a427-4ef9-4755-b2b7-fd9c03ae4d56" />
 ---
 
 # Contributors
 
-- Snehasis
+- Snehasis Chakraborty
 - Team Prakriti
 
 ---
@@ -303,4 +257,4 @@ This project is developed for educational and innovation purposes.
 # Conclusion
 
 Prakriti combines AI, environmental analytics, and modern web technologies to create an intelligent agricultural prediction platform focused on improving decision-making in Indian farming systems.
-<img width="2175" height="1732" alt="image" src="https://github.com/user-attachments/assets/ccf4a427-4ef9-4755-b2b7-fd9c03ae4d56" />
+
