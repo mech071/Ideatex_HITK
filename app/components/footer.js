@@ -27,7 +27,7 @@ const Footer = () => {
 
           <p className="text-gray-400 leading-relaxed max-w-md">
             Real-time environmental insights combined with machine learning
-              models to support modern Indian agriculture.
+            models to support modern Indian agriculture.
           </p>
         </div>
 
@@ -47,7 +47,10 @@ const Footer = () => {
               <Link href="/dashboard" className="hover:text-white transition">
                 Dashboard
               </Link>
-
+              <Link href="/faq" target="_blank"
+                rel="noopener noreferrer" className="hover:text-white transition">
+                FAQs
+              </Link>
             </div>
           </div>
         </div>

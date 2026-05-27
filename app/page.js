@@ -280,10 +280,10 @@ export default function Home() {
             </Link>
 
             <Link
-              href="/"
+              href="/faq"
               className="px-6 py-3 rounded-xl border border-white/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:scale-105 transition duration-300 font-semibold"
             >
-              See Features
+              FAQs
             </Link>
           </motion.div>
         </div>
