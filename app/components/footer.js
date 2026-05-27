@@ -5,11 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const Footer = () => {
-  const pathname = usePathname();
-
-  if (pathname?.startsWith("/dashboard")) {
-    return null;
-  }
 
   return (
     <footer className="relative bg-black border-t border-white/10 text-white px-6 py-12 overflow-hidden">
