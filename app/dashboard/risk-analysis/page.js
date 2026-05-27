@@ -35,7 +35,10 @@ export default function RiskAnalysisPage() {
                             {crops.map((crop) => (
                                 <article
                                     key={crop.rank}
-                                    className="rounded-lg border border-white/10 bg-[#0d0d0d] p-5"
+                                    className={`rounded-lg border p-5 transition-colors ${crop.disease_alert
+                                            ? "border-red-500/20 bg-red-950/30"
+                                            : "border-white/10 bg-[#061806]"
+                                        }`}
                                 >
                                     <div className="flex items-center justify-between gap-4">
                                         <div>
@@ -50,11 +53,10 @@ export default function RiskAnalysisPage() {
                                             </h3>
                                         </div>
                                         <span
-                                            className={`rounded-full px-3 py-1 text-sm ${
-                                                crop.disease_alert
-                                                    ? "bg-amber-500/10 text-amber-200"
-                                                    : "bg-green-500/10 text-green-300"
-                                            }`}
+                                            className={`rounded-full px-3 py-1 text-sm ${crop.disease_alert
+                                                ? "bg-amber-500/10 text-amber-200"
+                                                : "bg-green-500/10 text-green-300"
+                                                }`}
                                         >
                                             {crop.disease_alert
                                                 ? t.alert
@@ -62,8 +64,24 @@ export default function RiskAnalysisPage() {
                                         </span>
                                     </div>
                                     <p className="mt-4 text-gray-400">
-                                        {crop.disease_alert ||
-                                            t.noDiseaseRisk}
+                                        {crop.disease_alert ? (
+                                            <>
+                                                <div className="flex flex-col gap-2">
+                                                    <div className="font-semibold text-amber-200">
+                                                        <span className="text-red-500">Disease :- </span>
+                                                        <span className="text-red-600 font-bold">{crop.disease_alert.disease}</span>
+                                                    </div>
+                                                    <div>
+                                                        <span className="text-green-500">Fix :- {crop.disease_alert.action}</span>
+                                                    </div>
+                                                    <div className="text-red-300">
+                                                        Risk :- {crop.disease_alert.risk}
+                                                    </div>
+                                                </div>
+                                            </>
+                                        ) : (
+                                            t.noDiseaseRisk
+                                        )}
                                     </p>
                                 </article>
                             ))}
