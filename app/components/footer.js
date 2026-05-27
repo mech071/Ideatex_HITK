@@ -24,6 +24,10 @@ const Footer = () => {
             Real-time environmental insights combined with machine learning
             models to support modern Indian agriculture.
           </p>
+          <br></br>
+          <div className="text-gray-400 leading-relaxed max-w-md ">
+            Made by Team HelloWorld
+          </div>
         </div>
 
         {/* Links */}
