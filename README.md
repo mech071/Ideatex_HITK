@@ -1,180 +1,127 @@
-```html
-<h1 align="center">🌱 Prakriti</h1>
+# Prakriti 🌱
 
-<p align="center">
-  AI-Powered Crop Yield Prediction System for Indian Agriculture
-</p>
+Prakriti is an AI-powered crop yield prediction system designed for Indian agriculture.  
+The platform combines real-time environmental data, machine learning models, and modern web technologies to help users analyze agricultural conditions and predict crop productivity.
 
-<hr>
+---
 
-<h2>📌 Overview</h2>
+# Features
 
-<p>
-Prakriti is an AI-driven agricultural prediction platform designed to assist Indian farmers and agricultural analysts by providing intelligent crop yield predictions using real-time environmental data and machine learning models.
-</p>
+- Crop yield prediction using Machine Learning
+- Real-time weather and environmental data
+- State & district based agricultural insights
+- Dynamic UI based on climate and daytime
+- Crop recommendation support
+- Risk and environmental analysis
+- Interactive dashboard
+- Modern responsive UI
+- Multi-page architecture with analytics support
 
-<p>
-The platform integrates weather APIs, environmental analysis, and predictive ML algorithms to generate accurate agricultural insights and improve decision-making in farming systems.
-</p>
+---
 
-<hr>
+# Tech Stack
 
-<h2>🚀 Features</h2>
+## Frontend
+- Next.js
+- React
+- Tailwind CSS
+- Framer Motion
+- Lucide Icons
 
-<ul>
-  <li>Crop yield prediction using Machine Learning</li>
-  <li>Real-time environmental and weather analysis</li>
-  <li>State and district based agricultural insights</li>
-  <li>Dynamic climate-responsive UI</li>
-  <li>Interactive analytics dashboard</li>
-  <li>Prediction history and monitoring</li>
-  <li>Responsive modern interface</li>
-  <li>Weather-based environmental visualization</li>
-</ul>
+## Backend
+- FastAPI (Python)
 
-<hr>
+## Machine Learning
+- Python
+- Scikit-learn
+- XGBoost
+- Pandas
+- NumPy
 
-<h2>🛠 Tech Stack</h2>
+## Database
+- MongoDB Atlas
 
-<h3>Frontend</h3>
+## APIs
+- OpenWeatherMap API
+- Open-Meteo API
+- WeatherAPI
 
-<ul>
-  <li>Next.js</li>
-  <li>React</li>
-  <li>Tailwind CSS</li>
-  <li>Framer Motion</li>
-  <li>Lucide React</li>
-</ul>
+## Deployment
+- Vercel (Frontend)
+- Render (Backend)
 
-<h3>Backend</h3>
+---
 
-<ul>
-  <li>FastAPI</li>
-  <li>Python</li>
-</ul>
+# Problem Statement
 
-<h3>Machine Learning</h3>
+Agriculture in India is heavily dependent on environmental conditions such as rainfall, temperature, humidity, and soil quality.  
+Farmers often lack accessible predictive tools that can assist in estimating crop productivity and environmental suitability.
 
-<ul>
-  <li>Scikit-learn</li>
-  <li>XGBoost</li>
-  <li>Pandas</li>
-  <li>NumPy</li>
-</ul>
+Prakriti aims to bridge this gap by providing:
+- AI-driven crop yield prediction
+- Real-time environmental analysis
+- Smart agricultural insights
 
-<h3>Database</h3>
+---
 
-<ul>
-  <li>MongoDB Atlas</li>
-</ul>
+# Application Workflow
 
-<h3>APIs</h3>
+## Step 1 — Landing Page
+Users are introduced to the platform with an overview of the system and its purpose.
 
-<ul>
-  <li>OpenWeatherMap API</li>
-  <li>Open-Meteo API</li>
-  <li>WeatherAPI</li>
-</ul>
+↓
 
-<h3>Deployment</h3>
+## Step 2 — Location Selection
+Users select:
+- State
+- District
 
-<ul>
-  <li>Vercel (Frontend)</li>
-  <li>Render (Backend)</li>
-</ul>
+↓
 
-<hr>
+## Step 3 — Environmental Data Fetching
+The application fetches:
+- Temperature
+- Humidity
+- Rainfall
+- Seasonal conditions
+- Weather data
 
-<h2>🌾 Problem Statement</h2>
+using live APIs.
 
-<p>
-Agriculture in India is highly dependent on environmental and climatic conditions such as rainfall, humidity, temperature, and soil quality. Farmers often lack access to intelligent systems that can help estimate productivity and environmental suitability for crops.
-</p>
+↓
 
-<p>
-Prakriti addresses this challenge by combining AI-based prediction systems with live environmental analysis to provide meaningful agricultural insights.
-</p>
+## Step 4 — User Inputs
+Users provide additional agricultural details such as:
+- Crop type
+- Soil type
+- Soil pH
+- Land area
+- Irrigation information
 
-<hr>
+↓
 
-<h2>⚙️ Application Workflow</h2>
+## Step 5 — Machine Learning Prediction
+The backend processes:
+- Environmental data
+- User agricultural inputs
 
-<ol>
-  <li>
-    <strong>Landing Page</strong>
-    <p>Users are introduced to the platform and its agricultural prediction capabilities.</p>
-  </li>
+and sends them to the ML model.
 
-  <li>
-    <strong>Location Selection</strong>
-    <p>
-      Users select their:
-    </p>
+↓
 
-    <ul>
-      <li>State</li>
-      <li>District</li>
-    </ul>
-  </li>
+## Step 6 — Prediction Output
+The dashboard displays:
+- Predicted crop yield
+- Environmental analysis
+- Risk indicators
+- Recommendations
+- Data visualizations
 
-  <li>
-    <strong>Environmental Data Fetching</strong>
-    <p>
-      The system fetches real-time environmental data including:
-    </p>
+---
 
-    <ul>
-      <li>Temperature</li>
-      <li>Humidity</li>
-      <li>Rainfall</li>
-      <li>Seasonal conditions</li>
-      <li>Climate information</li>
-    </ul>
-  </li>
+# System Architecture
 
-  <li>
-    <strong>User Agricultural Inputs</strong>
-    <p>
-      Users provide agricultural details such as:
-    </p>
-
-    <ul>
-      <li>Crop type</li>
-      <li>Soil type</li>
-      <li>Soil pH</li>
-      <li>Land area</li>
-      <li>Irrigation information</li>
-    </ul>
-  </li>
-
-  <li>
-    <strong>Machine Learning Prediction</strong>
-    <p>
-      The backend processes environmental and agricultural data through ML models to generate crop yield predictions.
-    </p>
-  </li>
-
-  <li>
-    <strong>Dashboard Analytics</strong>
-    <p>
-      The dashboard displays:
-    </p>
-
-    <ul>
-      <li>Predicted crop yield</li>
-      <li>Environmental analysis</li>
-      <li>Risk indicators</li>
-      <li>Prediction insights</li>
-      <li>Data visualizations</li>
-    </ul>
-  </li>
-</ol>
-
-<hr>
-
-<h2>🧠 System Architecture</h2>
-
-<pre>
+```text
                 ┌────────────────────┐
                 │     Frontend       │
                 │   Next.js + React  │
@@ -182,7 +129,8 @@ Prakriti addresses this challenge by combining AI-based prediction systems with 
                           │
                           ▼
                 ┌────────────────────┐
-                │    FastAPI Backend │
+                │    API Layer       │
+                │  FastAPI Backend   │
                 └─────────┬──────────┘
                           │
           ┌───────────────┴───────────────┐
@@ -195,237 +143,164 @@ Prakriti addresses this challenge by combining AI-based prediction systems with 
                           ▼
                 ┌────────────────────┐
                 │    MongoDB Atlas   │
+                │ Prediction Storage │
                 └────────────────────┘
-</pre>
+```
 
-<hr>
+---
 
-<h2>🎨 Dynamic UI System</h2>
+# Dynamic UI System
 
-<p>
-The application interface dynamically adapts based on:
-</p>
+The application interface changes dynamically based on:
+- Time of day
+- Temperature
+- Seasonal conditions
+- Weather conditions
 
-<ul>
-  <li>Time of day</li>
-  <li>Weather conditions</li>
-  <li>Seasonal climate</li>
-  <li>Temperature</li>
-</ul>
-
-<p>
 Examples:
-</p>
+- Rainy weather → darker UI tones
+- Summer afternoons → warm gradients
+- Nighttime → dark themed visuals
 
-<ul>
-  <li>Rainy weather → darker visual tones</li>
-  <li>Summer afternoons → warmer gradients</li>
-  <li>Nighttime → dark themed interface</li>
-</ul>
+---
 
-<hr>
+# Machine Learning Pipeline
 
-<h2>🤖 Machine Learning Pipeline</h2>
+## Input Parameters
+- Temperature
+- Humidity
+- Rainfall
+- Soil type
+- Soil pH
+- Crop type
+- Irrigation data
+- Seasonal data
 
-<h3>Input Parameters</h3>
+## Processing
+- Data preprocessing
+- Feature scaling
+- Environmental normalization
+- Prediction inference
 
-<ul>
-  <li>Temperature</li>
-  <li>Humidity</li>
-  <li>Rainfall</li>
-  <li>Crop type</li>
-  <li>Soil type</li>
-  <li>Soil pH</li>
-  <li>Irrigation data</li>
-  <li>Seasonal conditions</li>
-</ul>
+## Output
+- Predicted crop yield
+- Productivity analysis
+- Agricultural recommendations
 
-<h3>Processing</h3>
+---
 
-<ul>
-  <li>Data preprocessing</li>
-  <li>Feature normalization</li>
-  <li>Prediction inference</li>
-  <li>Environmental analysis</li>
-</ul>
+# Why Prediction Takes Time
 
-<h3>Output</h3>
+The crop prediction process may take approximately **60–90 seconds** because:
 
-<ul>
-  <li>Predicted crop yield</li>
-  <li>Agricultural insights</li>
-  <li>Environmental analysis</li>
-  <li>Risk assessment</li>
-</ul>
+- Multiple real-time weather APIs are queried
+- Environmental data is processed dynamically
+- Backend preprocessing is performed
+- ML models analyze multiple agricultural parameters
+- Prediction generation occurs sequentially
 
-<hr>
+Network latency and external API response times can also affect prediction duration.
 
-<h2>⏳ Prediction Processing Time</h2>
+---
 
-<p>
-Crop prediction may take approximately <strong>60–90 seconds</strong> because the system performs multiple sequential operations before generating the final prediction.
-</p>
+# Initial Dashboard Loading Delay
 
-<p>
-The backend first fetches live environmental data from weather APIs based on the selected state and district. These APIs provide:
-</p>
+The backend is deployed using Render free-tier services.
 
-<ul>
-  <li>Temperature</li>
-  <li>Humidity</li>
-  <li>Rainfall data</li>
-  <li>Climate conditions</li>
-  <li>Seasonal information</li>
-</ul>
-
-<p>
-After collecting the data, the backend:
-</p>
-
-<ul>
-  <li>Processes environmental parameters</li>
-  <li>Normalizes agricultural inputs</li>
-  <li>Prepares feature vectors</li>
-  <li>Runs Machine Learning inference</li>
-  <li>Generates prediction analytics</li>
-</ul>
-
-<p>
-External API response latency and network conditions may also affect total prediction time.
-</p>
-
-<hr>
-
-<h2>🖥 Initial Dashboard Loading Delay</h2>
-
-<p>
-The backend is hosted using Render free-tier services.
-</p>
-
-<p>
-Render automatically places inactive backend services into sleep mode after periods of inactivity in order to conserve resources.
-</p>
-
-<p>
+Render automatically places inactive backend services into sleep mode to conserve resources.  
 When the dashboard is opened after inactivity:
-</p>
+- The backend server wakes up
+- Dependencies and runtime initialize
+- Database connections are restored
 
-<ul>
-  <li>The backend server wakes up</li>
-  <li>Dependencies initialize</li>
-  <li>Database connections are restored</li>
-  <li>ML services become active</li>
-</ul>
+This process may take up to **60 seconds** during the first request.
 
-<p>
-This startup process may take up to <strong>60 seconds</strong> during the first request.
-</p>
+Subsequent requests are significantly faster.
 
-<p>
-Once active, subsequent requests are significantly faster.
-</p>
+---
 
-<hr>
+# Future Improvements
 
-<h2>📈 Future Improvements</h2>
+- Satellite imagery integration
+- Soil scanning support
+- Regional language support
+- Disease prediction system
+- Fertilizer recommendation engine
+- Historical analytics dashboard
+- AI chatbot for agricultural support
+- Government scheme integration
 
-<ul>
-  <li>Satellite imagery integration</li>
-  <li>Crop disease prediction</li>
-  <li>Fertilizer recommendation engine</li>
-  <li>Regional language support</li>
-  <li>Historical agricultural analytics</li>
-  <li>AI agricultural chatbot</li>
-  <li>Government scheme integration</li>
-</ul>
+---
 
-<hr>
+# Installation
 
-<h2>⚡ Installation</h2>
+## Clone Repository
 
-<h3>Clone Repository</h3>
-
-<pre>
+```bash
 git clone https://github.com/your-username/prakriti.git
-</pre>
+```
 
-<h3>Frontend Setup</h3>
+## Frontend Setup
 
-<pre>
+```bash
 cd frontend
 npm install
 npm run dev
-</pre>
+```
 
-<h3>Backend Setup</h3>
+## Backend Setup
 
-<pre>
+```bash
 cd backend
 pip install -r requirements.txt
 uvicorn main:app --reload
-</pre>
-
-<hr>
-
-<h2>🔐 Environment Variables</h2>
-
-<h3>Frontend</h3>
-
-<pre>
-NEXT_PUBLIC_API_URL=
-NEXT_PUBLIC_WEATHER_API_KEY=
-</pre>
-
-<h3>Backend</h3>
-
-<pre>
-MONGODB_URI=
-WEATHER_API_KEY=
-</pre>
-
-<hr>
-
-<h2>📸 Screenshots</h2>
-
-<p>
-Add screenshots of:
-</p>
-
-<ul>
-  <li>Landing Page</li>
-  <li>Dashboard</li>
-  <li>Prediction Section</li>
-  <li>Analytics View</li>
-  <li>Weather Integration</li>
-  <li>FAQ Page</li>
-</ul>
-
-<hr>
-
-<h2>👨‍💻 Contributors</h2>
-
-<ul>
-  <li>Snehasis</li>
-  <li>Team Prakriti</li>
-</ul>
-
-<hr>
-
-<h2>📄 License</h2>
-
-<p>
-This project is developed for educational, research, and innovation purposes.
-</p>
-
-<hr>
-
-<h2>🌱 Conclusion</h2>
-
-<p>
-Prakriti combines artificial intelligence, environmental analysis, and modern web technologies to build an intelligent agricultural support system focused on improving farming decisions and crop productivity in India.
-</p>
 ```
 
+---
 
+# Environment Variables
 
+## Frontend
+
+```env
+NEXT_PUBLIC_API_URL=
+NEXT_PUBLIC_WEATHER_API_KEY=
+```
+
+## Backend
+
+```env
+MONGODB_URI=
+WEATHER_API_KEY=
+```
+
+---
+
+# Screenshots
+
+Add screenshots of:
+- Landing Page
+- Prediction Dashboard
+- Analytics Section
+- Weather Integration
+- FAQ Page
+
+---
+
+# Contributors
+
+- Snehasis
+- Team Prakriti
+
+---
+
+# License
+
+This project is developed for educational and innovation purposes.
+
+---
+
+# Conclusion
+
+Prakriti combines AI, environmental analytics, and modern web technologies to create an intelligent agricultural prediction platform focused on improving decision-making in Indian farming systems.
 <img width="2175" height="1732" alt="image" src="https://github.com/user-attachments/assets/ccf4a427-4ef9-4755-b2b7-fd9c03ae4d56" />
