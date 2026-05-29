@@ -21,7 +21,6 @@ export default function DashboardPage() {
                 t,
             }) => {
                 const weather = weatherLookup?.weather || {};
-                const soil = weatherLookup?.soil || {};
                 const crops =
                     overviewRecommendation?.top_5 ||
                     overviewRecommendation?.top_5_crops ||
@@ -30,7 +29,7 @@ export default function DashboardPage() {
 
                 return (
                     <div className="space-y-8">
-                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-5">
+                        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                             {[
                                 {
                                     title:
@@ -56,16 +55,6 @@ export default function DashboardPage() {
                                         weather.rainfall_total_30d
                                     )} mm`,
                                     color: "text-green-300",
-                                },
-                                {
-                                    title: t.soilPH,
-                                    value: formatNumber(soil.ph),
-                                    color: "text-amber-300",
-                                },
-                                {
-                                    title: t.nitrogen,
-                                    value: formatNumber(soil.nitrogen),
-                                    color: "text-orange-300",
                                 },
                             ].map((card, index) => (
                                 <motion.div

@@ -10,6 +10,7 @@ import {
     Cloud,
     CloudSun,
     FlaskConical,
+    LoaderCircle,
     LogOut,
     Menu,
     Settings,
@@ -76,8 +77,25 @@ export default function DashboardShell({ children }) {
 
     if (data.loading) {
         return (
-            <main className="min-h-screen bg-[#080808] text-white flex items-center justify-center">
-                {t.loadingDashboard}
+            <main className="flex min-h-screen items-center justify-center bg-[#080808] px-5 text-white">
+                <div className="flex flex-col items-center gap-5 text-center">
+                    <div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-green-400/20 bg-green-400/10">
+                        <div className="absolute inset-0 rounded-full border border-green-300/30 animate-ping" />
+                        <LoaderCircle
+                            size={34}
+                            className="relative text-green-300 animate-spin"
+                        />
+                    </div>
+
+                    <div>
+                        <p className="text-lg font-semibold text-green-100 animate-pulse">
+                            {t.loadingDashboard}
+                        </p>
+                        <div className="mt-4 h-1.5 w-56 overflow-hidden rounded-full bg-white/10">
+                            <div className="h-full w-1/2 animate-[pulse_1.2s_ease-in-out_infinite] rounded-full bg-green-400" />
+                        </div>
+                    </div>
+                </div>
             </main>
         );
     }

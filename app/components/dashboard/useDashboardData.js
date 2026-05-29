@@ -370,3 +370,70 @@ export function useDashboardData() {
 
     return state;
 }
+export async function regenerateRecommendation({
+    N,
+    P,
+    K,
+    ph,
+}) {
+    const state = dashboardCache.state;
+
+    const latitude = state.weatherLookup?.coordinates?.lat;
+    const longitude = state.weatherLookup?.coordinates?.lon;
+    const landArea = Number(state.user?.land_area_acres || 1);
+
+    if (!latitude || !longitude) {
+        throw new Error("Location unavailable");
+    }
+
+    try {
+        updateCache({
+            recommendationLoading: true,
+            recommendationError: "",
+        });
+
+        const response = await fetch(
+            "/api/get-crop-recommendation",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    latitude,
+                    longitude,
+                    land_area_acres: landArea,
+
+                    N: Number(N),
+                    P: Number(P),
+                    K: Number(K),
+                    ph: Number(ph),
+
+                    manual_soil: true,
+                }),
+            }
+        );
+
+        const json = await response.json();
+
+        if (!response.ok || !json.success) {
+            throw new Error(
+                json.message ||
+                    "Failed to regenerate recommendations"
+            );
+        }
+
+        updateCache({
+            recommendation: json.data,
+            recommendationLoading: false,
+            recommendationError: "",
+        });
+    } catch (error) {
+        updateCache({
+            recommendationLoading: false,
+            recommendationError: error.message,
+        });
+
+        throw error;
+    }
+}
